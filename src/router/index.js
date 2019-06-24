@@ -4,6 +4,10 @@ import position from '../controllers/position'
 import search from '../controllers/search'
 import profile from '../controllers/profile'
 import details from '../controllers/details'
+var socket=io.connect('http://localhost:8082')
+socket.on('message',()=>{
+  position.render()
+})
 
 export default class Router {
   constructor(obj) {

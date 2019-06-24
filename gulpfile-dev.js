@@ -35,7 +35,7 @@ function webserver() {
       livereload: true,
       middleware: [
         proxy('/api', {
-          target: 'https://m.lagou.com',
+          target: 'http://localhost:3000',
           changeOrigin: true, // 访问不同的域名，需要配置成 true
           pathRewrite: {
             '^/api': ''

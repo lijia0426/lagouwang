@@ -6,7 +6,8 @@ import Router from '../router/'
 import fetch from '../models/fetch'
 
 let positionList = []
-let currentPage = 1
+let currentPage = 0
+
 
 const gotoPage = id => {
   let router = new Router({mode: 'hash'})
@@ -14,8 +15,8 @@ const gotoPage = id => {
 }
 
 const render = async() => {
-  let result = await fetch.get('/api/listmore.json?pageNo=1&pageSize=15')
-  let data = positionList = result.content.data.page.result
+  let result = await fetch.get('/api/fe/api/position/find?page=0&pagesize=5')
+  let data = positionList = result.data.result
 
   $('main').html(positionTpl)
   
@@ -64,8 +65,8 @@ const render = async() => {
       head.attr('src', '/images/ajax-loader.gif')
 
       // 异步加载数据
-      let result = await fetch.get(`/api/listmore.json?pageNo=2&pageSize=2`)
-      let data = positionList = [...result.content.data.page.result, ...positionList]
+      let result = await fetch.get(`/api/fe/api/position/find?page=2&pagesize=2`)
+      let data = positionList = [...result.data.result, ...positionList]
 
       let renderedPositionListTpl = template.render(positionListTpl, { data })
       $('#position-list').html(renderedPositionListTpl)
@@ -84,8 +85,8 @@ const render = async() => {
     } else if (maxY >= 0) {
       foot.attr('src', '/images/ajax-loader.gif')
       // 异步加载数据
-      let result = await fetch.get(`/api/listmore.json?pageNo=${++currentPage}&pageSize=15`)
-      let data = positionList = [ ...positionList, ...result.content.data.page.result ]
+      let result = await fetch.get(`/api/fe/api/position/find/?page=${++currentPage}&pagesize=5`)
+      let data = positionList = [ ...positionList, ...result.data.result ]
 
       let renderedPositionListTpl = template.render(positionListTpl, { data })
       $('#position-list').html(renderedPositionListTpl)
